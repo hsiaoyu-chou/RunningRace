@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 @SpringBootApplication
@@ -64,13 +63,11 @@ public class Main {
       r2 = new Running();
       r3 = new Running();
 
-      r1.setName("runner1");
-      r2.setName("runner2");
-      r3.setName("runner3");
-
+      //r1.setName("runner1");
+      //r2.setName("runner2");
+      //r3.setName("runner3");
 
       if(running_status == false){
-
           r1.setValue(0);
           r2.setValue(0);
           r3.setValue(0);
@@ -86,11 +83,6 @@ public class Main {
       r3.start();
 
       running_status = true;
-
-      Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-
-      Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
-      //System.out.println("threadSet.size() :" + threadSet.size());
 
       try {
           r1.join();
@@ -140,101 +132,5 @@ public class Main {
 
       return "index";
   }
-/*
-  @Bean
-  public DataSource dataSource() throws SQLException {
-    if (dbUrl == null || dbUrl.isEmpty()) {
-      return new HikariDataSource();
-    } else {
-      HikariConfig config = new HikariConfig();
-      config.setJdbcUrl(dbUrl);
-      return new HikariDataSource(config);
-    }
-  }
 
-  public void sendGet(String url)throws Exception {
-
-    URL obj = new URL(url);
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-    // optional default is GET
-    con.setRequestMethod("GET");
-
-    int responseCode = con.getResponseCode();
-    System.out.println("\nSending 'GET' request to URL : " + url);
-    System.out.println("Response Code : " + responseCode);
-
-    BufferedReader in = new BufferedReader(
-            new InputStreamReader(con.getInputStream()));
-    String inputLine;
-    StringBuffer response = new StringBuffer();
-
-    while ((inputLine = in.readLine()) != null) {
-      response.append(inputLine);
-    }
-    in.close();
-
-    //print result
-    System.out.println(response.toString());
-  }
-
-  public String sendPost(String action, String url, String data, String Dropbox_API_Arg, byte[] bytes) throws Exception {
-
-    //String url = "https://selfsolve.apple.com/wcResults.do";
-    URL obj = new URL(url);
-    HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-    //add reuqest header
-    con.setRequestMethod("POST");
-
-    if(action == "get_account" && user.access_tkn != null){
-      System.out.println("\nsendPost action : get_account");
-      System.out.println("user.access_tkn != null");
-      con.setRequestProperty("Authorization", "Bearer " + user.access_tkn);
-      con.addRequestProperty("Content-Type", "application/json");
-    }
-    else if(action == "upload"){
-      System.out.println("\nsendPost action : upload");
-      con.setRequestProperty("Authorization", "Bearer " + user.access_tkn);
-      con.setRequestProperty("Content-Type", "application/octet-stream");
-      con.setRequestProperty("Dropbox-API-Arg", "{\"path\":\"/"+ Dropbox_API_Arg +"\"}");
-    }
-    else System.out.println("\nsendPost action : token");
-
-    System.out.println("getRequestProperties : " + con.getRequestProperties().toString());
-
-    // Send post request
-    con.setDoOutput(true);
-    DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-    if(data != null) wr.writeBytes(data);
-    if(bytes != null) wr.write(bytes);
-    wr.flush();
-    wr.close();
-
-    int responseCode = con.getResponseCode();
-    String responseMsg = con.getResponseMessage();
-
-    System.out.println("\nSending 'POST' request to URL : " + url);
-    //System.out.println("Post parameters : " + data);
-    System.out.println("Response Code : " + responseCode);
-    System.out.println("Response Meg : " + responseMsg);
-
-    BufferedReader in;
-    if(responseCode == 200) in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-    else in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-
-    String inputLine;
-    StringBuffer response = new StringBuffer();
-
-    while ((inputLine = in.readLine()) != null) {
-      response.append(inputLine);
-    }
-    in.close();
-
-    //print result
-    System.out.println(response.toString());
-    return response.toString();
-
-  }
-*/
 }
